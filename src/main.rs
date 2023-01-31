@@ -1,5 +1,5 @@
 use rand::{self, Rng};
-use std::{fmt, io};
+use std::{fmt, io, vec};
 
 
 pub struct AbandonedCrate {
@@ -62,14 +62,54 @@ impl SolveAttempt {
     }
 }
 
-fn solve() {
-    let mut probability_vec : Vec<Vec<f64>> = vec![vec![0.0; 10]; 4];
 
+fn main() {
+    let string : String = String::from("2 4 5 6 2 4");
+    let solve_attempt : SolveAttempt = SolveAttempt::from_string(string).unwrap();
+    println!("{}", solve_attempt);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// depracated 
 #[cfg(test)]
 mod test {
-    use crate::{AbandonedCrate, SolveAttempt};
+    use crate::{AbandonedCrate, SolveAttempt, find_max_index};
     use rand::Rng;
     #[test]
     fn random_auto_solve() {
@@ -122,14 +162,40 @@ mod test {
             cncp_probability_vec[2][usize::from(num3)] += (_temp_cncp)/4.0;
             cncp_probability_vec[3][usize::from(num4)] += (_temp_cncp)/4.0;
 
-
-
-
             random_abandoned_crate.remaining_attempts -= 1;
         }
+
+        println!("{} {} {} {}",
+        find_max_index(&cnip_probability_vec[0]),
+        find_max_index(&cnip_probability_vec[1]),
+        find_max_index(&cnip_probability_vec[2]),
+        find_max_index(&cnip_probability_vec[3])
+        );
+
+
+        println!("{} {} {} {}",
+        find_max_index(&cncp_probability_vec[0]),
+        find_max_index(&cncp_probability_vec[1]),
+        find_max_index(&cncp_probability_vec[2]),
+        find_max_index(&cncp_probability_vec[3])
+        );
     }
 }
 
-fn main() {
-    solve();
-}
+
+/* 
+fn find_max_index<T>(vector : &Vec<T>) -> usize
+where T : PartialOrd
+{
+    let length : usize = vector.len();
+    let mut max_index : usize = 0;
+
+    for index in 1..length {
+        if vector[index] > vector[max_index] {
+            max_index = index;
+        }
+    }
+
+    return max_index;
+} 
+*/
