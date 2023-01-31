@@ -1,13 +1,15 @@
 use rand::{self, Rng};
 use std::{fmt, io, vec};
+mod simulation;
+
 
 
 pub struct AbandonedCrate {
-    num1 : u8,
-    num2 : u8,
-    num3 : u8,
-    num4 : u8,
-    remaining_attempts : u8,
+    num1 : usize,
+    num2 : usize,
+    num3 : usize,
+    num4 : usize,
+    remaining_attempts : usize,
 }
 
 impl fmt::Display for AbandonedCrate {
@@ -17,26 +19,26 @@ impl fmt::Display for AbandonedCrate {
 }
 
 impl AbandonedCrate {
-    fn new(num1 : u8, num2 : u8, num3 : u8, num4 : u8) -> AbandonedCrate {
+    fn new(num1 : usize, num2 : usize, num3 : usize, num4 : usize) -> AbandonedCrate {
         return AbandonedCrate { num1, num2, num3, num4, remaining_attempts : 10 };
     }
     fn generate() -> AbandonedCrate {
         let mut rng = rand::thread_rng();
-        let num1 : u8 = rng.gen_range(0..10);
-        let num2 : u8 = rng.gen_range(0..10);
-        let num3 : u8 = rng.gen_range(0..10);
-        let num4 : u8 = rng.gen_range(0..10);
+        let num1 : usize = rng.gen_range(0..10);
+        let num2 : usize = rng.gen_range(0..10);
+        let num3 : usize = rng.gen_range(0..10);
+        let num4 : usize = rng.gen_range(0..10);
         return AbandonedCrate::new(num1, num2, num3, num4);
     }
 }
 
 pub struct SolveAttempt {
-    num1 : u8,
-    num2 : u8,
-    num3 : u8,
-    num4 : u8,
-    cor_num_inc_pos : u8,
-    cor_num_cor_pos : u8,
+    num1 : usize,
+    num2 : usize,
+    num3 : usize,
+    num4 : usize,
+    cor_num_inc_pos : usize,
+    cor_num_cor_pos : usize,
 }
 
 impl fmt::Display for SolveAttempt {
@@ -46,27 +48,25 @@ impl fmt::Display for SolveAttempt {
 }
 
 impl SolveAttempt {
-    fn new(num1 : u8, num2 : u8, num3 : u8, num4 : u8, cor_num_inc_pos : u8, cor_num_cor_pos : u8) -> SolveAttempt {
+    fn new(num1 : usize, num2 : usize, num3 : usize, num4 : usize, cor_num_inc_pos : usize, cor_num_cor_pos : usize) -> SolveAttempt {
         return SolveAttempt { num1, num2, num3, num4, cor_num_inc_pos, cor_num_cor_pos };
     }
     fn from_string(string : String) -> Result<SolveAttempt, ()> {
         let keywords : Vec<&str> = string.split(" ").collect();
         if keywords.len() != 6 {return Err(());}
-        let num1 : u8 = keywords[0].parse().unwrap();
-        let num2 : u8 = keywords[1].parse().unwrap();
-        let num3 : u8 = keywords[2].parse().unwrap();
-        let num4 : u8 = keywords[3].parse().unwrap();
-        let cor_num_inc_pos : u8 = keywords[4].parse().unwrap();
-        let cor_num_cor_pos : u8 = keywords[5].parse().unwrap();
+        let num1 : usize = keywords[0].parse().unwrap();
+        let num2 : usize = keywords[1].parse().unwrap();
+        let num3 : usize = keywords[2].parse().unwrap();
+        let num4 : usize = keywords[3].parse().unwrap();
+        let cor_num_inc_pos : usize = keywords[4].parse().unwrap();
+        let cor_num_cor_pos : usize = keywords[5].parse().unwrap();
         return Ok(SolveAttempt::new(num1, num2, num3, num4, cor_num_inc_pos, cor_num_cor_pos))
     }
 }
 
 
 fn main() {
-    let string : String = String::from("2 4 5 6 2 4");
-    let solve_attempt : SolveAttempt = SolveAttempt::from_string(string).unwrap();
-    println!("{}", solve_attempt);
+    simulation::quick_test();
 }
 
 
@@ -119,12 +119,12 @@ mod test {
         println!("{}", random_abandoned_crate);
         while random_abandoned_crate.remaining_attempts > 0 {
             let mut rng = rand::thread_rng();
-            let num1 : u8 = rng.gen_range(0..10);
-            let num2 : u8 = rng.gen_range(0..10);
-            let num3 : u8 = rng.gen_range(0..10);
-            let num4 : u8 = rng.gen_range(0..10);
-            let mut cor_num_inc_pos : u8 = 0;
-            let mut cor_num_cor_pos : u8 = 0;
+            let num1 : usize = rng.gen_range(0..10);
+            let num2 : usize = rng.gen_range(0..10);
+            let num3 : usize = rng.gen_range(0..10);
+            let num4 : usize = rng.gen_range(0..10);
+            let mut cor_num_inc_pos : usize = 0;
+            let mut cor_num_cor_pos : usize = 0;
 
             if num1 == random_abandoned_crate.num1 {cor_num_cor_pos += 1}
             else if num1 == random_abandoned_crate.num2 {cor_num_inc_pos += 1}
