@@ -3,7 +3,6 @@ use std::{fmt, io, vec};
 mod simulation;
 
 
-
 pub struct AbandonedCrate {
     num1 : usize,
     num2 : usize,
@@ -66,7 +65,7 @@ impl SolveAttempt {
 
 
 fn main() {
-    simulation::quick_test();
+    simulation::simulate();
 }
 
 
@@ -107,6 +106,7 @@ fn main() {
 
 
 // depracated 
+/*
 #[cfg(test)]
 mod test {
     use crate::{AbandonedCrate, SolveAttempt, find_max_index};
@@ -182,8 +182,6 @@ mod test {
     }
 }
 
-
-/* 
 fn find_max_index<T>(vector : &Vec<T>) -> usize
 where T : PartialOrd
 {
